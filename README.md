@@ -1,8 +1,7 @@
 # react-webpack-skeleton
-React + MobX base project with webpack
+React base project with webpack
 
 ## Project Dependencies:
-- NodeJS 6+
 - NPM/Yarn
 - Webpack
 

@@ -47,18 +47,30 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(jpe?g|png|gif|svg)/,
+        use: [
+          'file-loader',
+        ],
+      },
+      {
         test: /\.(js|jsx)$/,
         use: [
-          'babel-loader',
+          {
+            loader: 'babel-loader',
+            query: {
+              cacheDirectory: true,
+            },
+          },
         ],
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
+        test: /\.(css|sass|scss)$/,
         use: [
           'style-loader',
           'css-loader',
           'postcss-loader',
+          'sass-loader',
         ],
       },
     ],

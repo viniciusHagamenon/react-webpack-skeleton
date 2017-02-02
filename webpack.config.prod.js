@@ -11,7 +11,7 @@ module.exports = {
     // the entry point of our app
   ],
   output: {
-    filename: 'bundle.js',
+    filename: 'js/bundle.[hash:8].js',
     // the output bundle
 
     path: resolve(__dirname, 'dist'),
@@ -27,6 +27,29 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(jpe?g|png|gif|svg)/,
+        use: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '/images/[name].[hash:8].[ext]',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            query: {
+              progressive: true,
+              optimizationLevel: 3,
+              interlaced: false,
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
+            },
+          },
+        ],
+      },
+      {
         test: /\.(js|jsx)$/,
         use: [
           'babel-loader',
@@ -34,10 +57,10 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
+        test: /\.(css|sass|scss)$/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: ['css-loader', 'postcss-loader'],
+          loader: ['css-loader', 'postcss-loader', 'sass-loader'],
         }),
       },
     ],
@@ -59,7 +82,7 @@ module.exports = {
       },
     }),
 
-    new ExtractTextPlugin('bundle.css'),
+    new ExtractTextPlugin('css/bundle.[hash:8].css'),
 
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
