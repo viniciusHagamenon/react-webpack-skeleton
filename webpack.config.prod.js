@@ -32,7 +32,7 @@ module.exports = {
           {
             loader: 'file-loader',
             query: {
-              name: '/images/[name].[hash:8].[ext]',
+              name: 'images/[name].[hash:8].[ext]',
             },
           },
           {
@@ -60,8 +60,32 @@ module.exports = {
         test: /\.(css|sass|scss)$/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: ['css-loader', 'postcss-loader', 'sass-loader'],
+          loader: ['css-loader', 'postcss-loader', 'resolve-url-loader', 'sass-loader'],
         }),
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: 'fonts/[name].[hash:8].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            query: {
+              limit: 10000,
+              mimetype: 'application/font-woff',
+              name: 'fonts/[name].[hash:8].[ext]',
+            },
+          },
+        ],
       },
     ],
   },
